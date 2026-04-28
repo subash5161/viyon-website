@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viyon - Men's & Kids Clothing</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+
+</head>
+<body>
+    <script src="script.js"></script>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo" onclick="goHome()">VIYON<span>.</span></div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search for shirts, jeans, kids wear..." id="searchInput">
+      <button onclick="doSearch()">🔍</button>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link" onclick="showPage('home')">🏠 <span>Home</span></button>
+      <button class="nav-link" onclick="showPage('cart')">🛒 <span>Cart</span> <span class="cart-badge" id="cartCount">0</span></button>
+      <button class="nav-link" onclick="showPage('account')">👤 <span>Login</span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="hero">
+      <div class="hero-text">
+        <h1>Fashion for <span>Men & Kids</span><br>All in One Place</h1>
+        <p>Premium quality clothing at the best prices. Explore the latest trends.</p>
+        <button class="btn-hero" onclick="scrollToProducts()">Shop Now →</button>
+      </div>
+      <div class="hero-img">👕</div>
+    </div>
+
+    <div class="section-title">🛍️ Shop by Category</div>
+    <div class="categories">
+      <div class="cat-card" onclick="filterCat('men')"><div class="cat-icon">👔</div><div class="cat-name">Men's Shirts</div><div class="cat-sub">120+ styles</div></div>
+      <div class="cat-card" onclick="filterCat('men-jeans')"><div class="cat-icon">👖</div><div class="cat-name">Men's Jeans</div><div class="cat-sub">80+ styles</div></div>
+      <div class="cat-card" onclick="filterCat('men-tshirt')"><div class="cat-icon">👕</div><div class="cat-name">Men's T-Shirts</div><div class="cat-sub">200+ styles</div></div>
+      <div class="cat-card" onclick="filterCat('kids-boys')"><div class="cat-icon">🧒</div><div class="cat-name">Boys Wear</div><div class="cat-sub">150+ styles</div></div>
+      <div class="cat-card" onclick="filterCat('kids-girls')"><div class="cat-icon">👧</div><div class="cat-name">Girls Wear</div><div class="cat-sub">130+ styles</div></div>
+      <div class="cat-card" onclick="filterCat('winter')"><div class="cat-icon">🧥</div><div class="cat-name">Winterwear</div><div class="cat-sub">90+ styles</div></div>
+    </div>
+
+    <div class="section-title" id="products-section">✨ Featured Products</div>
+    <div class="filter-bar">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('men',this)">Men</button>
+      <button class="filter-btn" onclick="setFilter('kids',this)">Kids</button>
+      <button class="filter-btn" onclick="setFilter('sale',this)">On Sale</button>
+      <button class="filter-btn" onclick="setFilter('new',this)">New Arrivals</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL PAGE -->
+<div class="page" id="page-detail">
+  <div style="max-width:1200px;margin:0 auto">
+    <button onclick="goBack()" style="background:none;border:none;color:var(--blue);font-family:'Poppins',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;margin-bottom:1rem;display:flex;align-items:center;gap:.3rem">← Back</button>
+    <div class="detail-grid">
+      <div>
+        <div class="detail-img-box" id="detailImg"></div>
+        <div style="display:flex;gap:.5rem;margin-top:.8rem;flex-wrap:wrap">
+          <span style="background:#e8f0fe;color:var(--blue);border-radius:6px;padding:4px 10px;font-size:.75rem;font-weight:600">🚚 Free Delivery</span>
+          <span style="background:#e8f5e9;color:#388e3c;border-radius:6px;padding:4px 10px;font-size:.75rem;font-weight:600">↩️ 10 Day Return</span>
+          <span style="background:#fff8e1;color:#f57f17;border-radius:6px;padding:4px 10px;font-size:.75rem;font-weight:600">✅ 100% Original</span>
+        </div>
+      </div>
+      <div class="detail-info" id="detailInfo"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CART PAGE -->
+<div class="page" id="page-cart">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-title">🛒 My Cart</div>
+    <div class="cart-container">
+      <div>
+        <div class="cart-items">
+          <div class="cart-header">Cart Items (<span id="cartItemCount">0</span>)</div>
+          <div id="cartItemsList"></div>
+          <div id="emptyCart" style="padding:2rem;text-align:center;color:var(--text2);display:none">
+            <div style="font-size:3rem;margin-bottom:.5rem">🛒</div>
+            <p style="font-weight:600">Your cart is empty</p>
+            <button onclick="showPage('home')" style="margin-top:1rem;background:var(--blue);color:#fff;border:none;padding:.6rem 1.5rem;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600">Shop Now</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="price-summary">
+          <div class="ps-header">💰 Price Details</div>
+          <div class="ps-body">
+            <div class="ps-row"><span>Price (<span id="psCount">0</span> items)</span><span id="psOriginal">₹0</span></div>
+            <div class="ps-row"><span>Discount</span><span style="color:#388e3c" id="psDiscount">-₹0</span></div>
+            <div class="ps-row"><span>Delivery Charges</span><span style="color:#388e3c">FREE</span></div>
+            <div class="ps-total"><span>Total Amount</span><span id="psTotal">₹0</span></div>
+            <div class="ps-save" id="psSave">You save ₹0 on this order!</div>
+            <button class="btn-place-order" onclick="showPage('checkout')">Proceed to Checkout →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT PAGE -->
+<div class="page" id="page-checkout">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-title">📦 Checkout</div>
+    <div class="checkout-grid">
+      <div>
+        <div class="form-card">
+          <div class="form-header">📍 Delivery Address</div>
+          <div class="form-body">
+            <div class="address-options" id="savedAddresses">
+              <div class="addr-option selected" onclick="selectAddr(this)">
+                <input type="radio" name="addr" checked>
+                <div class="addr-text"><span class="addr-label">HOME</span><strong>Rajan Kumar</strong><br>12, Gandhi Nagar, Anna Salai, Chennai - 600002, Tamil Nadu<br><span style="color:var(--text2)">📞 9876543210</span></div>
+              </div>
+              <div class="addr-option" onclick="toggleNewAddr(this)">
+                <input type="radio" name="addr">
+                <div class="addr-text" style="color:var(--blue);font-weight:600">➕ Add New Address</div>
+              </div>
+            </div>
+            <div id="newAddrForm" style="display:none;margin-top:1rem;border-top:1px solid #eee;padding-top:1rem">
+              <div class="form-row">
+                <div class="form-group"><label>Full Name</label><input type="text" placeholder="Enter full name"></div>
+                <div class="form-group"><label>Mobile Number</label><input type="tel" placeholder="10-digit number"></div>
+              </div>
+              <div class="form-group"><label>Pincode</label><input type="text" placeholder="6-digit pincode"></div>
+              <div class="form-row">
+                <div class="form-group"><label>State</label>
+                  <select><option>Tamil Nadu</option><option>Karnataka</option><option>Maharashtra</option><option>Delhi</option><option>Kerala</option><option>Andhra Pradesh</option><option>Telangana</option></select>
+                </div>
+                <div class="form-group"><label>City</label><input type="text" placeholder="City"></div>
+              </div>
+              <div class="form-group"><label>House No., Building Name</label><input type="text" placeholder="House/Flat No."></div>
+              <div class="form-group"><label>Road Name, Area, Colony</label><input type="text" placeholder="Colony, Street, Locality"></div>
+              <div class="form-row">
+                <div class="form-group"><label>Address Type</label>
+                  <select><option>Home</option><option>Work</option><option>Other</option></select>
+                </div>
+              </div>
+              <button onclick="saveAddress()" style="background:var(--blue);color:#fff;border:none;padding:.6rem 1.5rem;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:.88rem">Save Address</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <div class="form-header">💳 Payment Method</div>
+          <div class="form-body">
+            <div style="display:flex;flex-direction:column;gap:.6rem">
+              <label class="addr-option"><input type="radio" name="pay" checked style="margin-right:.5rem"> <span>💳 Credit / Debit Card</span></label>
+              <label class="addr-option"><input type="radio" name="pay" style="margin-right:.5rem"> <span>📱 UPI (GPay, PhonePe, Paytm)</span></label>
+              <label class="addr-option"><input type="radio" name="pay" style="margin-right:.5rem"> <span>🏦 Net Banking</span></label>
+              <label class="addr-option"><input type="radio" name="pay" style="margin-right:.5rem"> <span>💵 Cash on Delivery</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="price-summary">
+          <div class="ps-header">🛍️ Order Summary</div>
+          <div class="ps-body">
+            <div id="checkoutItems" style="margin-bottom:.8rem"></div>
+            <div class="ps-row"><span>Subtotal</span><span id="co-sub">₹0</span></div>
+            <div class="ps-row"><span>Discount</span><span style="color:#388e3c" id="co-disc">-₹0</span></div>
+            <div class="ps-row"><span>Delivery</span><span style="color:#388e3c">FREE</span></div>
+            <div class="ps-total"><span>Total</span><span id="co-total">₹0</span></div>
+            <button class="btn-place-order" onclick="placeOrder()" style="background:linear-gradient(135deg,var(--blue),#1565c0)">🎉 Place Order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER SUCCESS -->
+<div class="page" id="page-success">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="success-page">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Order Placed Successfully!</div>
+      <div class="success-sub">Thank you for shopping at Viyon! Your order is confirmed.</div>
+      <div class="order-id-box">
+        <span>Order ID</span>
+        <p id="orderId">VYN-2024-XXXX</p>
+      </div>
+      <div style="background:#e8f5e9;border-radius:12px;padding:1rem 1.5rem;margin-bottom:2rem;text-align:left;max-width:480px;margin:0 auto 2rem">
+        <div style="font-weight:700;color:#388e3c;margin-bottom:.5rem">📦 Delivery Details</div>
+        <p style="font-size:.85rem;color:var(--text2)">Estimated Delivery: <strong style="color:var(--text)">3-5 Business Days</strong></p>
+        <p style="font-size:.85rem;color:var(--text2);margin-top:.3rem">Delivering to: <strong style="color:var(--text)">12, Gandhi Nagar, Chennai</strong></p>
+      </div>
+      <div class="track-steps">
+        <div class="track-step done"><div class="track-dot">✅</div><div class="track-label">Order Placed</div></div>
+        <div class="track-step done"><div class="track-dot">✅</div><div class="track-label">Confirmed</div></div>
+        <div class="track-step"><div class="track-dot">📦</div><div class="track-label">Packed</div></div>
+        <div class="track-step"><div class="track-dot">🚚</div><div class="track-label">Shipped</div></div>
+        <div class="track-step"><div class="track-dot">🏠</div><div class="track-label">Delivered</div></div>
+      </div>
+      <button class="btn-continue" onclick="goHome()" style="margin-top:2rem">Continue Shopping</button>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNT PAGE -->
+<div class="page" id="page-account">
+  <div style="max-width:500px;margin:2rem auto">
+    <div class="form-card">
+      <div class="form-header">👤 Login to Viyon</div>
+      <div class="form-body">
+        <div class="form-group"><label>Mobile Number / Email</label><input type="text" placeholder="Enter mobile or email"></div>
+        <div class="form-group"><label>Password</label><input type="password" placeholder="Enter password"></div>
+        <button onclick="showPage('home')" style="width:100%;background:linear-gradient(135deg,var(--blue),#1565c0);color:#fff;border:none;padding:.75rem;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;margin-bottom:.8rem">Login</button>
+        <div style="text-align:center;font-size:.82rem;color:var(--text2)">New to Viyon? <span style="color:var(--blue);font-weight:600;cursor:pointer">Create Account</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>VIYON</h4>
+      <p>Premium Men's & Kids Fashion. Quality clothing at the best prices.</p>
+      <p>📍 Chennai, Tamil Nadu</p>
+      <p>📞 +91 98765 43210</p>
+    </div>
+    <div class="footer-col">
+      <h4>Men's Collection</h4>
+      <a href="#">Shirts</a><a href="#">T-Shirts</a><a href="#">Jeans</a><a href="#">Trousers</a><a href="#">Winterwear</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kids Collection</h4>
+      <a href="#">Boys Wear</a><a href="#">Girls Wear</a><a href="#">School Uniforms</a><a href="#">Party Wear</a><a href="#">Baby Clothing</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="#">Track Order</a><a href="#">Returns & Refunds</a><a href="#">Size Guide</a><a href="#">Contact Us</a><a href="#">FAQ</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2024 Viyon Men's & Kids Clothing. All rights reserved.</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+
+</body>
+</html>
